@@ -23,7 +23,7 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to shorten URL");
+        throw new Error(response.statusText || "Failed to shorten URL");
       }
 
       const data = await response.json();
