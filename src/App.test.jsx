@@ -38,8 +38,8 @@ describe("App Component", () => {
 
     it("should not show error or result initially", () => {
       render(<App />);
-      expect(screen.queryByText(/error:/i)).not.toBeInTheDocument();
-      expect(screen.queryByText(/shortened url:/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/network error/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/success!/i)).not.toBeInTheDocument();
     });
   });
 
@@ -102,7 +102,7 @@ describe("App Component", () => {
       await user.click(button);
 
       await waitFor(() => {
-        expect(screen.getByText(/shortened url:/i)).toBeInTheDocument();
+        expect(screen.getByText(/success!/i)).toBeInTheDocument();
         expect(screen.getByText("http://short.url/abc123")).toBeInTheDocument();
       });
     });
@@ -226,7 +226,7 @@ describe("App Component", () => {
       await user.click(button);
 
       await waitFor(() => {
-        expect(screen.getByText(/error: network error/i)).toBeInTheDocument();
+        expect(screen.getByText(/network error/i)).toBeInTheDocument();
       });
     });
 
@@ -245,7 +245,7 @@ describe("App Component", () => {
       await user.click(button);
 
       await waitFor(() => {
-        expect(screen.getByText(/error: bad request/i)).toBeInTheDocument();
+        expect(screen.getByText(/bad request/i)).toBeInTheDocument();
       });
     });
 
@@ -271,9 +271,7 @@ describe("App Component", () => {
       await user.click(button);
 
       await waitFor(() => {
-        expect(
-          screen.getByText(/error: invalid url format/i),
-        ).toBeInTheDocument();
+        expect(screen.getByText(/invalid url format/i)).toBeInTheDocument();
       });
     });
 
@@ -309,7 +307,7 @@ describe("App Component", () => {
       await user.click(button);
 
       await waitFor(() => {
-        expect(screen.getByText(/error: network error/i)).toBeInTheDocument();
+        expect(screen.getByText(/network error/i)).toBeInTheDocument();
       });
 
       // Second submission succeeds
@@ -330,8 +328,8 @@ describe("App Component", () => {
       await user.click(button);
 
       await waitFor(() => {
-        expect(screen.queryByText(/error:/i)).not.toBeInTheDocument();
-        expect(screen.getByText(/shortened url:/i)).toBeInTheDocument();
+        expect(screen.queryByText(/network error/i)).not.toBeInTheDocument();
+        expect(screen.getByText(/success!/i)).toBeInTheDocument();
       });
     });
   });
