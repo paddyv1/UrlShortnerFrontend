@@ -18,7 +18,7 @@ function App() {
       // Create request DTO matching C# ShortenUrlRequest
       const requestDto = new ShortenUrlRequest(url);
 
-      const response = await fetch("http://localhost:5152/api/shorten", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/shorten`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
