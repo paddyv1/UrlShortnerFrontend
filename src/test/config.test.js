@@ -1,3 +1,12 @@
+/**
+ * Environment Configuration Tests
+ *
+ * Tests to ensure environment variables are properly configured:
+ * - VITE_API_URL is defined and has correct format
+ * - Environment mode (dev/prod/test) is properly set
+ * - API URLs are constructed correctly
+ */
+
 import { describe, it, expect, beforeAll } from "vitest";
 
 describe("Environment Configuration", () => {

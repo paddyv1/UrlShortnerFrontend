@@ -1,10 +1,20 @@
+/**
+ * App Component Test Suite
+ *
+ * Comprehensive tests for the URL Shortener application including:
+ * - Component rendering
+ * - Form interactions
+ * - API request handling
+ * - Success and error states
+ * - Clipboard functionality
+ */
+
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-// eslint-disable-next-line no-unused-vars
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 
-// Mock fetch globally
+// Mock the global fetch API for testing
 // eslint-disable-next-line no-undef
 global.fetch = vi.fn();
 
