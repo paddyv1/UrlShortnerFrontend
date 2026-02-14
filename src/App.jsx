@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import { ShortenUrlRequest, ShortenUrlResponse } from "./types/dtos";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -14,12 +15,15 @@ function App() {
     setShortenedUrl("");
 
     try {
-      const response = await fetch("YOUR_API_ENDPOINT_HERE", {
+      // Create request DTO matching C# ShortenUrlRequest
+      const requestDto = new ShortenUrlRequest(url);
+
+      const response = await fetch("http://localhost:5152/api/shorten", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify(requestDto),
       });
 
       if (!response.ok) {
@@ -27,9 +31,17 @@ function App() {
       }
 
       const data = await response.json();
-      setShortenedUrl(
-        data.shortUrl || data.shortened_url || JSON.stringify(data),
-      );
+      console.log("Raw response data:", data);
+
+      // Parse response DTO matching C# ShortenUrlResponse
+      const responseDto = new ShortenUrlResponse(data);
+      console.log("Response DTO:", responseDto);
+
+      if (!responseDto.Success) {
+        throw new Error(responseDto.ErrorMessage || "Failed to shorten URL");
+      }
+
+      setShortenedUrl(responseDto.ShortUrl);
     } catch (err) {
       setError(err.message);
     } finally {
