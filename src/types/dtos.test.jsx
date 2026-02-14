@@ -1,3 +1,12 @@
+/**
+ * Data Transfer Object Tests
+ *
+ * Tests for DTO classes that handle API communication:
+ * - ShortenUrlRequest construction and properties
+ * - ShortenUrlResponse parsing from API data
+ * - Edge cases and error handling
+ */
+
 import { describe, it, expect } from "vitest";
 import { ShortenUrlRequest, ShortenUrlResponse } from "./dtos";
 

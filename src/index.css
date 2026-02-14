@@ -1,61 +1,103 @@
+/**
+ * Global Styles and Base Theme
+ * 
+ * This file defines the foundational styles for the entire application including:
+ * - Font settings and typography
+ * - Background gradient and animated effects
+ * - Hexagon pattern overlay
+ * - Box model reset
+ */
+
+/* Root-level CSS variables and global settings */
 :root {
+  /* Typography - Modern, clean font stack */
   font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* Theme settings */
+  color-scheme: light dark; /* Support both light and dark modes */
+  color: rgba(
+    255,
+    255,
+    255,
+    0.87
+  ); /* Default text color with slight transparency */
 
+  /* Main gradient background - dark blue/purple theme */
+  background: linear-gradient(135deg, #1d006b 0%, #2b2323 100%);
+
+  /* Font rendering optimizations for crisp text */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; /* Smooth fonts on WebKit browsers */
+  -moz-osx-font-smoothing: grayscale; /* Smooth fonts on Firefox macOS */
 }
 
+/* Universal box-sizing reset for predictable layouts */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Include padding and border in element dimensions */
 }
 
+/* HTML element setup for proper background attachment on iOS */
+html {
+  min-height: 100vh;
+  /* Apply base gradient to html as fallback for iOS Safari */
+  background: linear-gradient(135deg, #1d006b 0%, #2b2323 100%);
+  background-attachment: fixed; /* Keep background fixed while scrolling */
+}
+
+/* Main body layout - centered content with full viewport height */
 body {
   margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  place-items: center; /* Center content both vertically and horizontally */
+  min-width: 320px; /* Minimum width for mobile devices */
+  min-height: 100vh; /* Full viewport height */
   position: relative;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+/**
+ * Animated gradient overlay (::before pseudo-element)
+ * Creates dynamic, moving radial gradients for visual interest
+ */
 body::before {
   content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed; /* Fixed to viewport, doesn't scroll with content */
+  top: -10%; /* Extend beyond viewport for iOS overscroll */
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  width: 120%; /* Ensure coverage during iOS address bar transitions */
+  height: 120%;
+
+  /* Three radial gradients positioned at different locations */
   background:
     radial-gradient(
       circle at 20% 50%,
-      rgba(120, 119, 198, 0.3) 0%,
+      /* Left side gradient */ rgba(255, 255, 255, 0.3) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 80%,
-      rgba(118, 75, 162, 0.3) 0%,
+      /* Bottom right gradient */ rgba(255, 255, 255, 0.3) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 40% 20%,
-      rgba(102, 126, 234, 0.3) 0%,
+      /* Top gradient */ rgba(255, 255, 255, 0.3) 0%,
       transparent 50%
     );
+
+  /* Gentle pulsing animation */
   animation: gradientShift 15s ease infinite;
-  z-index: -1;
+  z-index: -1; /* Behind all content */
 }
 
+/* Keyframes for the gradient pulsing effect */
 @keyframes gradientShift {
   0%,
   100% {
@@ -63,14 +105,95 @@ body::before {
     transform: scale(1);
   }
   50% {
-    opacity: 0.8;
-    transform: scale(1.1);
+    opacity: 0.8; /* Slightly fade */
+    transform: scale(1.1); /* Slightly enlarge */
   }
 }
 
+/**
+ * Hexagon pattern overlay (::after pseudo-element)
+ * Creates a subtle geometric pattern using three intersecting line grids
+ * The three gradients at 0°, 60°, and -60° form hexagonal shapes
+ */
+body::after {
+  content: "";
+  position: fixed; /* Fixed to viewport */
+  top: -10%; /* Extend beyond viewport for iOS overscroll */
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  width: 120%; /* Ensure coverage during iOS address bar transitions */
+  height: 120%;
+
+  /* Three repeating linear gradients that intersect to form hexagons */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      /* Vertical lines */ transparent,
+      transparent 50px,
+      /* Space between lines */ rgba(255, 255, 255, 0.03) 50px,
+      /* Line start */ rgba(255, 255, 255, 0.03) 52px /* Line end (2px wide) */
+    ),
+    repeating-linear-gradient(
+      60deg,
+      /* Diagonal lines (60° from horizontal) */ transparent,
+      transparent 50px,
+      rgba(255, 255, 255, 0.03) 50px,
+      rgba(255, 255, 255, 0.03) 52px
+    ),
+    repeating-linear-gradient(
+      -60deg,
+      /* Diagonal lines (-60° from horizontal) */ transparent,
+      transparent 50px,
+      rgba(255, 255, 255, 0.03) 50px,
+      rgba(255, 255, 255, 0.03) 52px
+    );
+
+  pointer-events: none; /* Allow clicks to pass through to elements below */
+  z-index: 0; /* Above gradient but below content */
+  opacity: 0.6; /* Subtle effect, not overpowering */
+}
+
+/* iOS Safari specific fixes for background stability */
+@supports (-webkit-touch-callout: none) {
+  /* Target iOS Safari specifically */
+  html {
+    /* Extend background beyond viewport for iOS overscroll */
+    min-height: -webkit-fill-available;
+  }
+
+  body {
+    /* Prevent gap at top when scrolling */
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure backgrounds stay in place during scroll */
+  body::before,
+  body::after {
+    /* Use will-change for better performance on iOS */
+    will-change: transform;
+    /* Force GPU acceleration */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Light mode theme override - triggered by system preference */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #213547; /* Darker text for light background */
+    /* Purple gradient for light mode */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  html {
+    /* Apply light mode background to html as well for iOS */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
   }
 }
