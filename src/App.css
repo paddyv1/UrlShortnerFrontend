@@ -471,6 +471,56 @@ h1 {
   transform: translateY(0); /* Remove lift when pressed */
 }
 
+/* === EXPIRY TIME SECTION === */
+/* Radio button group for selecting URL expiration time */
+.expiry-section {
+  margin-top: 1.25rem;
+}
+
+/* Label text for expiry selection */
+.expiry-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+/* Container for radio button options */
+.radio-group {
+  display: flex;
+  gap: 2rem; /* Spacing between radio buttons */
+  flex-wrap: wrap;
+}
+
+/* Individual radio button option styling */
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+/* Hover state for radio options */
+.radio-option:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Style the radio input itself */
+.radio-option input[type="radio"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #8b5cf6; /* Purple to match your theme */
+}
+
+/* Radio button label text */
+.radio-text {
+  user-select: none;
+}
+
 /* === RESPONSIVE DESIGN === */
 /* Mobile devices - adjust sizing for smaller screens */
 @media (max-width: 640px) {
