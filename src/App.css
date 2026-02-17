@@ -1,12 +1,12 @@
 /**
- * App Component Styles
+ * App Component Styles - Professional Design
  * 
  * This file contains all styles for the URL Shortener application including:
  * - Layout and container styles
  * - Header section with logo and title
  * - Form input and button styles
  * - Notification components (error and success)
- * - Animation keyframes
+ * - Minimal animations for polish
  * - Responsive design media queries
  */
 
@@ -21,234 +21,149 @@
   z-index: 1; /* Above background layers */
 }
 
-/* Main container with fade-in animation */
+/* Main container with subtle fade-in on load */
 .container {
-  animation: fadeIn 0.8s ease-out;
+  animation: fadeIn 0.4s ease-out;
 }
 
-/* Fade in animation for initial page load */
+/* Simple fade-in animation for professional appearance */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px); /* Start slightly below */
   }
   to {
     opacity: 1;
-    transform: translateY(0); /* End at natural position */
   }
 }
 
 /* === HEADER SECTION === */
-/* Header with logo, title, and subtitle - centered layout */
+/* Header with logo, title, and subtitle - professional centered layout */
 .header {
   text-align: center;
-  margin-bottom: 3rem;
-  animation: slideDown 0.6s ease-out;
+  margin-bottom: 2.5rem;
 }
 
-/* Slide down animation for header entrance */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px); /* Start above */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Wrapper for the logo icon */
+/* Logo icon container */
 .icon-wrapper {
   display: inline-block;
-  margin-bottom: 1rem;
-  animation: scaleIn 0.5s ease-out 0.2s both; /* Delayed start */
+  margin-bottom: 1.25rem;
 }
 
-/* Scale and rotate animation for icon entrance */
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.5) rotate(-10deg); /* Start small and rotated */
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-}
-
-/* Logo SVG icon with floating animation */
+/* Logo SVG icon - clean and simple */
 .logo-icon {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   color: #ffffff;
-  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.3)); /* Glow effect */
-  animation: float 3s ease-in-out infinite; /* Continuous floating */
+  filter: drop-shadow(
+    0 2px 4px rgba(0, 0, 0, 0.1)
+  ); /* Subtle shadow for depth */
 }
 
-/* Floating animation for logo - gentle up and down motion */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px); /* Float up 10px */
-  }
-}
-
-/* Main heading with gradient text effect */
+/* Main heading - clean professional typography */
 h1 {
-  font-size: 3rem;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 600;
   margin: 0 0 0.5rem 0;
-  /* Gradient text effect */
-  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
-  -webkit-background-clip: text; /* Clip background to text */
-  -webkit-text-fill-color: transparent; /* Make text transparent to show gradient */
-  background-clip: text;
-  letter-spacing: -0.5px; /* Tighten letter spacing slightly */
+  color: #ffffff;
+  letter-spacing: -0.5px;
 }
 
-/* Subtitle text with transparency */
+/* Subtitle text - clear and readable */
 .subtitle {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
-  font-weight: 300; /* Light weight */
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  font-weight: 400;
   margin: 0;
 }
 
 /* === FORM SECTION === */
-/* Form container with slide-up animation */
+/* Form container - professional card design */
 .url-form {
-  animation: slideUp 0.6s ease-out 0.3s both; /* Delayed entrance */
+  margin-top: 0;
 }
 
-/* Slide up animation for form entrance */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px); /* Start below */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Glassmorphism container for input and button */
+/* Clean card container for form inputs */
 .input-wrapper {
-  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
-  backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.95); /* Solid white background */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Subtle professional shadow */
+  transition: box-shadow 0.2s ease;
 }
 
-/* Enhanced glassmorphism effect on hover */
+/* Subtle hover effect for interactivity */
 .input-wrapper:hover {
-  background: rgba(255, 255, 255, 0.15); /* Slightly more opaque */
-  border-color: rgba(255, 255, 255, 0.3); /* Brighter border */
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-/* URL input field */
+/* URL input field - clean professional styling */
 .url-input {
   width: 100%;
-  padding: 1rem 1.25rem;
+  padding: 0.875rem 1rem;
   font-size: 1rem;
-  background: rgba(255, 255, 255, 0.95); /* Nearly opaque white */
-  border: 2px solid transparent;
-  border-radius: 12px;
+  background: #ffffff;
+  border: 1.5px solid #d1d5db; /* Medium gray border */
+  border-radius: 8px;
   outline: none;
-  transition: all 0.3s ease;
-  color: #1f2937; /* Dark text color */
-  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #111827;
+  font-weight: 400;
 }
 
 /* Placeholder text styling */
 .url-input::placeholder {
-  color: #9ca3af; /* Gray placeholder */
+  color: #9ca3af;
 }
 
-/* Focus state with purple accent and lift effect */
+/* Focus state with blue accent for professional look */
 .url-input:focus {
-  background: #ffffff; /* Full white on focus */
-  border-color: #8b5cf6; /* Purple border */
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1); /* Purple glow */
-  transform: translateY(-2px); /* Subtle lift */
+  border-color: #2563eb; /* Professional blue */
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); /* Blue focus ring */
 }
 
 /* Disabled state */
 .url-input:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  background: #f3f4f6;
 }
 
-/* Submit button with gradient background and shine effect */
+/* Submit button - professional solid design */
 .submit-btn {
   width: 100%;
-  margin-top: 1rem;
-  padding: 1rem 2rem;
-  font-size: 1.05rem;
+  margin-top: 1.5rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   color: white;
-  /* Purple gradient background */
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  background: #2563eb; /* Professional blue */
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem; /* Space between icon and text */
-  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4); /* Purple glow */
-  position: relative;
-  overflow: hidden; /* Contain the shine effect */
+  gap: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Shine effect overlay - sweeps across button on hover */
-.submit-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%; /* Start off the left edge */
-  width: 100%;
-  height: 100%;
-  /* White shine that fades at edges */
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-/* Trigger shine animation on hover */
-.submit-btn:hover:not(:disabled)::before {
-  left: 100%; /* Sweep across to right edge */
-}
-
-/* Hover state - darker gradient and enhanced shadow */
+/* Hover state - slightly darker blue */
 .submit-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
-  box-shadow: 0 6px 24px rgba(139, 92, 246, 0.5);
-  transform: translateY(-2px); /* Lift effect */
+  background: #1d4ed8;
 }
 
 /* Active/pressed state */
 .submit-btn:active:not(:disabled) {
-  transform: translateY(0); /* Remove lift when pressed */
+  background: #1e40af;
 }
 
 /* Disabled button state */
 .submit-btn:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
+  background: #93c5fd;
 }
 
 /* Icon inside buttons */
@@ -277,59 +192,33 @@ h1 {
 }
 
 /* === NOTIFICATION COMPONENTS === */
-/* Base notification style for both error and success messages */
+/* Base notification style for error and success messages */
 .notification {
-  animation: slideIn 0.5s ease-out;
+  animation: fadeIn 0.3s ease-out;
   margin-top: 1.5rem;
-  padding: 1.5rem;
-  border-radius: 16px;
-  backdrop-filter: blur(10px); /* Glassmorphism effect */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-/* Slide in animation for notifications */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px); /* Start from left */
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* === ERROR NOTIFICATION === */
-/* Error message styling with red background */
+/* Error message with professional red styling */
 .error {
-  background: rgba(239, 68, 68, 0.9); /* Translucent red */
-  color: white;
+  background: #fef2f2; /* Light red background */
+  color: #991b1b; /* Dark red text */
+  border-color: #fecaca; /* Medium red border */
   display: flex;
   align-items: center;
-  gap: 0.75rem; /* Space between icon and text */
+  gap: 0.75rem;
 }
 
-/* Error icon with shake animation */
+/* Error icon - simple and clean */
 .error .icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0; /* Don't compress icon */
-  animation: shake 0.5s ease-in-out;
-}
-
-/* Shake animation for error icon */
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-5px); /* Shake left */
-  }
-  75% {
-    transform: translateX(5px); /* Shake right */
-  }
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: #dc2626; /* Red icon */
 }
 
 /* Error message text */
@@ -339,10 +228,11 @@ h1 {
 }
 
 /* === SUCCESS RESULT === */
-/* Success notification with light background */
+/* Success notification with clean white background */
 .result {
-  background: rgba(255, 255, 255, 0.95);
-  color: #1f2937; /* Dark text */
+  background: #ffffff;
+  color: #111827;
+  border-color: #e5e7eb;
 }
 
 /* Success header with icon and title */
@@ -354,121 +244,119 @@ h1 {
   margin-bottom: 1.25rem;
 }
 
-/* Success checkmark icon with scale animation */
+/* Success checkmark icon - clean and simple */
 .success-icon {
-  width: 32px;
-  height: 32px;
-  color: #10b981; /* Green checkmark */
-  animation: checkmark 0.6s ease-out;
-}
-
-/* Checkmark pop-in animation */
-@keyframes checkmark {
-  0% {
-    transform: scale(0) rotate(-45deg); /* Start small and rotated */
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2) rotate(10deg); /* Overshoot slightly */
-  }
-  100% {
-    transform: scale(1) rotate(0deg); /* Settle to natural position */
-    opacity: 1;
-  }
+  width: 28px;
+  height: 28px;
+  color: #059669; /* Professional green */
 }
 
 /* Success heading */
 .result h2 {
   margin: 0;
-  color: #1f2937;
-  font-size: 1.5rem;
-  font-weight: 700;
+  color: #111827;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 /* Container displaying the shortened URL */
 .url-display {
-  background: linear-gradient(
-    135deg,
-    #f3f4f6 0%,
-    #e5e7eb 100%
-  ); /* Light gray gradient */
-  padding: 1.25rem;
-  border-radius: 12px;
-  margin-bottom: 1.25rem;
-  border: 2px solid #e5e7eb;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden; /* Contain shimmer effect */
-}
-
-/* Shimmer effect that continuously sweeps across */
-.url-display::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  /* Subtle purple shine */
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(139, 92, 246, 0.1),
-    transparent
-  );
-  animation: shimmer 2s infinite; /* Continuous shimmer */
-}
-
-/* Shimmer sweep animation */
-@keyframes shimmer {
-  0% {
-    left: -100%; /* Start off left edge */
-  }
-  100% {
-    left: 100%; /* End off right edge */
-  }
+  background: #f9fafb; /* Light gray background */
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  border: 1px solid #e5e7eb;
 }
 
 /* Code element displaying the shortened URL */
 .url-display code {
-  color: #6d28d9; /* Purple text */
-  font-weight: 600;
-  font-size: 1.05rem;
-  word-break: break-all; /* Break long URLs */
+  color: #1e40af; /* Professional blue */
+  font-weight: 500;
+  font-size: 0.95rem;
+  word-break: break-all;
   display: block;
-  font-family: "Monaco", "Courier New", monospace; /* Monospace font */
+  font-family: "Monaco", "Courier New", monospace;
 }
 
-/* Copy to clipboard button with green gradient */
+/* Copy to clipboard button with professional green */
 .copy-btn {
   width: 100%;
-  padding: 0.875rem 1.5rem;
-  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: white;
-  /* Green gradient background */
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: #059669; /* Professional green */
   border: none;
-  border-radius: 12px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3); /* Green glow */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover state - darker green and stronger shadow */
+/* Hover state - darker green */
 .copy-btn:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4);
-  transform: translateY(-2px); /* Lift effect */
+  background: #047857;
 }
 
 /* Active/pressed state */
 .copy-btn:active {
-  transform: translateY(0); /* Remove lift when pressed */
+  background: #065f46;
+}
+
+/* === EXPIRY TIME SECTION === */
+/* Radio button group for selecting URL expiration time */
+.expiry-section {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e5e7eb; /* Subtle divider */
+}
+
+/* Label text for expiry selection */
+.expiry-label {
+  color: #374151; /* Dark gray */
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* Container for radio button options */
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Individual radio button option styling */
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: #4b5563; /* Medium gray */
+  font-size: 0.9rem;
+  transition: color 0.15s ease;
+}
+
+/* Hover state for radio options */
+.radio-option:hover {
+  color: #111827; /* Darker on hover */
+}
+
+/* Style the radio input itself */
+.radio-option input[type="radio"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb; /* Professional blue */
+}
+
+/* Radio button label text */
+.radio-text {
+  user-select: none;
 }
 
 /* === RESPONSIVE DESIGN === */
@@ -481,22 +369,28 @@ h1 {
 
   /* Smaller heading for mobile */
   h1 {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
 
   /* Smaller subtitle for mobile */
   .subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   /* Smaller logo icon for mobile */
   .logo-icon {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
   }
 
-  /* Less padding in input wrapper for mobile */
+  /* Adjust padding in card for mobile */
   .input-wrapper {
-    padding: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  /* Stack radio buttons vertically on small screens */
+  .radio-group {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }

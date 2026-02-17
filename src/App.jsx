@@ -20,6 +20,23 @@ function App() {
   const [shortenedUrl, setShortenedUrl] = useState(""); // The resulting short URL from API
   const [loading, setLoading] = useState(false); // Loading state during API call
   const [error, setError] = useState(""); // Error message to display to user
+  const [selectedTime, setSelectedTime] = useState("30 Days");
+
+  const handleChange = (event) => {
+    setSelectedTime(event.target.value);
+  };
+
+  /**
+   * Calculate expiry date based on selected time period
+   * @param {string} timeOption - The selected time option ("30 Days", "60 Days", "90 Days")
+   * @returns {string} ISO 8601 formatted date string
+   */
+  const calculateExpiryDate = (timeOption) => {
+    const now = new Date();
+    const days = parseInt(timeOption.split(" ")[0]); // Extract number from "30 Days"
+    now.setDate(now.getDate() + days);
+    return now.toISOString();
+  };
 
   /**
    * Handle form submission to shorten URL
@@ -40,9 +57,11 @@ function App() {
     setShortenedUrl(""); // Clear any previous results
 
     try {
-      // Create request Data Transfer Object matching backend C# model
-      const requestDto = new ShortenUrlRequest(url);
+      // Calculate expiry date based on selected time
+      const expiresAt = calculateExpiryDate(selectedTime);
 
+      // Create request Data Transfer Object with expiry date
+      const requestDto = new ShortenUrlRequest(url, expiresAt);
       // Make POST request to backend API endpoint
       const response = await fetch(`${import.meta.env.VITE_API_URL}/shorten`, {
         method: "POST",
@@ -116,6 +135,43 @@ function App() {
             disabled={loading} // Disable during API call
             className="url-input"
           />
+          <div className="expiry-section">
+            <p className="expiry-label">Set your link's expiry time:</p>
+            <div className="radio-group">
+              <label className="radio-option">
+                <input
+                  type="radio"
+                  name="time"
+                  value="30 Days"
+                  checked={selectedTime === "30 Days"}
+                  onChange={handleChange}
+                />
+                <span className="radio-text">30 Days</span>
+              </label>
+
+              <label className="radio-option">
+                <input
+                  type="radio"
+                  name="time"
+                  value="60 Days"
+                  checked={selectedTime === "60 Days"}
+                  onChange={handleChange}
+                />
+                <span className="radio-text">60 Days</span>
+              </label>
+
+              <label className="radio-option">
+                <input
+                  type="radio"
+                  name="time"
+                  value="90 Days"
+                  checked={selectedTime === "90 Days"}
+                  onChange={handleChange}
+                />
+                <span className="radio-text">90 Days</span>
+              </label>
+            </div>
+          </div>
           {/* Submit button with loading state */}
           <button type="submit" disabled={loading} className="submit-btn">
             {/* Show different content based on loading state */}

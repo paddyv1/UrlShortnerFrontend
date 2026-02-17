@@ -4,7 +4,7 @@
  * This file defines the foundational styles for the entire application including:
  * - Font settings and typography
  * - Background gradient and animated effects
- * - Hexagon pattern overlay
+ * - Modern SaaS-style decorative shapes
  * - Box model reset
  */
 
@@ -24,8 +24,8 @@
     0.87
   ); /* Default text color with slight transparency */
 
-  /* Main gradient background - dark blue/purple theme */
-  background: linear-gradient(135deg, #1d006b 0%, #2b2323 100%);
+  /* Main gradient background - professional blue theme */
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
 
   /* Font rendering optimizations for crisp text */
   font-synthesis: none;
@@ -45,7 +45,7 @@
 html {
   min-height: 100vh;
   /* Apply base gradient to html as fallback for iOS Safari */
-  background: linear-gradient(135deg, #1d006b 0%, #2b2323 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
   background-attachment: fixed; /* Keep background fixed while scrolling */
 }
 
@@ -61,8 +61,8 @@ body {
 }
 
 /**
- * Animated gradient overlay (::before pseudo-element)
- * Creates dynamic, moving radial gradients for visual interest
+ * Large gradient orbs (::before pseudo-element)
+ * Creates modern SaaS-style decorative background shapes
  */
 body::before {
   content: "";
@@ -74,46 +74,30 @@ body::before {
   width: 120%; /* Ensure coverage during iOS address bar transitions */
   height: 120%;
 
-  /* Three radial gradients positioned at different locations */
+  /* Large soft gradient orbs positioned in corners */
   background:
     radial-gradient(
-      circle at 20% 50%,
-      /* Left side gradient */ rgba(255, 255, 255, 0.3) 0%,
-      transparent 50%
+      circle at 0% 0%,
+      /* Top left orb */ rgba(139, 92, 246, 0.3) 0%,
+      transparent 40%
     ),
     radial-gradient(
-      circle at 80% 80%,
-      /* Bottom right gradient */ rgba(255, 255, 255, 0.3) 0%,
-      transparent 50%
+      circle at 100% 100%,
+      /* Bottom right orb */ rgba(59, 130, 246, 0.35) 0%,
+      transparent 40%
     ),
     radial-gradient(
-      circle at 40% 20%,
-      /* Top gradient */ rgba(255, 255, 255, 0.3) 0%,
-      transparent 50%
+      circle at 100% 0%,
+      /* Top right orb */ rgba(99, 102, 241, 0.25) 0%,
+      transparent 35%
     );
 
-  /* Gentle pulsing animation */
-  animation: gradientShift 15s ease infinite;
   z-index: -1; /* Behind all content */
 }
 
-/* Keyframes for the gradient pulsing effect */
-@keyframes gradientShift {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8; /* Slightly fade */
-    transform: scale(1.1); /* Slightly enlarge */
-  }
-}
-
 /**
- * Hexagon pattern overlay (::after pseudo-element)
- * Creates a subtle geometric pattern using three intersecting line grids
- * The three gradients at 0°, 60°, and -60° form hexagonal shapes
+ * Additional decorative shapes (::after pseudo-element)
+ * Adds more depth with smaller accent shapes
  */
 body::after {
   content: "";
@@ -125,33 +109,26 @@ body::after {
   width: 120%; /* Ensure coverage during iOS address bar transitions */
   height: 120%;
 
-  /* Three repeating linear gradients that intersect to form hexagons */
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      /* Vertical lines */ transparent,
-      transparent 50px,
-      /* Space between lines */ rgba(255, 255, 255, 0.03) 50px,
-      /* Line start */ rgba(255, 255, 255, 0.03) 52px /* Line end (2px wide) */
+  /* Smaller accent shapes scattered throughout */
+  background:
+    radial-gradient(
+      circle at 15% 80%,
+      /* Bottom left accent */ rgba(167, 139, 250, 0.15) 0%,
+      transparent 25%
     ),
-    repeating-linear-gradient(
-      60deg,
-      /* Diagonal lines (60° from horizontal) */ transparent,
-      transparent 50px,
-      rgba(255, 255, 255, 0.03) 50px,
-      rgba(255, 255, 255, 0.03) 52px
+    radial-gradient(
+      circle at 85% 40%,
+      /* Right side accent */ rgba(96, 165, 250, 0.15) 0%,
+      transparent 30%
     ),
-    repeating-linear-gradient(
-      -60deg,
-      /* Diagonal lines (-60° from horizontal) */ transparent,
-      transparent 50px,
-      rgba(255, 255, 255, 0.03) 50px,
-      rgba(255, 255, 255, 0.03) 52px
+    radial-gradient(
+      circle at 50% 90%,
+      /* Bottom center accent */ rgba(129, 140, 248, 0.12) 0%,
+      transparent 20%
     );
 
   pointer-events: none; /* Allow clicks to pass through to elements below */
-  z-index: 0; /* Above gradient but below content */
-  opacity: 0.6; /* Subtle effect, not overpowering */
+  z-index: 0; /* Above main gradient but below content */
 }
 
 /* iOS Safari specific fixes for background stability */
@@ -187,13 +164,13 @@ body::after {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547; /* Darker text for light background */
-    /* Purple gradient for light mode */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Professional blue gradient for light mode */
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   }
 
   html {
     /* Apply light mode background to html as well for iOS */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     background-attachment: fixed;
   }
 }
