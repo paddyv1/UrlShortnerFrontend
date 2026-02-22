@@ -59,32 +59,6 @@ function App() {
   };
 
   /**
-   * Extract shortcode from URL (last 7 characters)
-   * @param {string} url - Full shortened URL
-   * @returns {string} - Shortcode only
-   */
-  const extractShortcode = (url) => {
-    try {
-      // Normalize URL with protocol if missing
-      let normalizedUrl = url.trim();
-      if (!/^https?:\/\//i.test(normalizedUrl)) {
-        normalizedUrl = "https://" + normalizedUrl;
-      }
-
-      const urlObj = new URL(normalizedUrl);
-      // Get pathname and remove leading slash
-      const pathname = urlObj.pathname.replace(/^\//, "").replace(/\/$/, "");
-
-      return pathname;
-    } catch (error) {
-      console.error("Error extracting shortcode:", error);
-      // Fallback: try to extract manually
-      const parts = url.split("/");
-      return parts[parts.length - 1] || url;
-    }
-  };
-
-  /**
    * Validate if the URL is from the correct short URL domain
    * @param {string} url - URL to validate
    * @returns {boolean} - True if valid, false otherwise
@@ -218,13 +192,12 @@ function App() {
       }
 
       // Extract shortcode from URL
-      const shortcode = extractShortcode(qrUrl);
-      console.log("Extracted shortcode:", shortcode);
+      const shortcode = qrUrl.slice(-7);
 
       // Build query parameters for GET request or use POST with body
       // Option 1: Using POST with JSON body
       const requestDto = new QrCodeRequest(
-        qrUrl, // ShortenedUrl
+        shortcode, // ShortenedUrl
         showPokedex, // PokemonSprite
         showPokedex ? pokedexNumber : null, // PkdexNumber (nullable)
       );
