@@ -95,10 +95,10 @@ function App() {
     try {
       // Ensure URL has a protocol
       let urlToValidate = url;
-      if (!url.startsWith("http://") && !url.startsWith("https://")) {
-        urlToValidate = "https://" + url;
-        console.log("Added protocol:", urlToValidate);
-      }
+      // if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      //   urlToValidate = "https://" + url;
+      //   console.log("Added protocol:", urlToValidate);
+      // }
 
       const urlObj = new URL(urlToValidate);
       const hostname = urlObj.hostname;
