@@ -22,6 +22,14 @@ function App() {
   const [error, setError] = useState(""); // Error message to display to user
   const [selectedTime, setSelectedTime] = useState("30 Days");
 
+  // QR Code Generator states
+  const [qrUrl, setQrUrl] = useState(""); // URL to generate QR code for
+  const [qrCode, setQrCode] = useState(""); // Generated QR code image
+  const [qrLoading, setQrLoading] = useState(false); // Loading state for QR generation
+  const [qrError, setQrError] = useState(""); // Error message for QR generation
+  const [showPokedex, setShowPokedex] = useState(false); // Toggle for Pokédex option
+  const [pokedexNumber, setPokedexNumber] = useState("001"); // Selected Pokédex number
+
   const handleChange = (event) => {
     setSelectedTime(event.target.value);
   };
@@ -91,6 +99,51 @@ function App() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  /**
+   * Handle QR code generation
+   * @param {Event} e - Form submission event
+   */
+  const handleQrSubmit = async (e) => {
+    e.preventDefault();
+    setQrLoading(true);
+    setQrError("");
+    setQrCode("");
+
+    try {
+      // Build the QR code generation URL
+      let qrGenerationUrl = qrUrl;
+
+      // Add Pokédex number if enabled
+      if (showPokedex && pokedexNumber) {
+        qrGenerationUrl += `?pokedex=${pokedexNumber}`;
+      }
+
+      // Use a QR code API (example using QR Server API)
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrGenerationUrl)}`;
+
+      setQrCode(qrApiUrl);
+    } catch (err) {
+      setQrError(err.message || "Failed to generate QR code");
+    } finally {
+      setQrLoading(false);
+    }
+  };
+
+  /**
+   * Handle Pokédex number input validation
+   * @param {string} value - Input value
+   */
+  const handlePokedexChange = (e) => {
+    const value = e.target.value;
+    // Only allow numbers and limit to 3 digits
+    if (/^\d{0,3}$/.test(value)) {
+      const num = parseInt(value) || 0;
+      if (num >= 0 && num <= 479) {
+        setPokedexNumber(value.padStart(3, "0"));
+      }
     }
   };
 
@@ -276,8 +329,156 @@ function App() {
 
       <div className="qr-code-generator">
         <h2>QR Code Generator</h2>
+        <p style={{ fontStyle: "italic", fontSize: "0.9rem" }}>
+          Currently in beta
+        </p>
         <p>Generate a QR code for your shortened URL</p>
-        {/* Placeholder for future QR code generation feature */}
+
+        {/* QR Code Generation Form */}
+        <form onSubmit={handleQrSubmit} className="qr-form">
+          <div className="input-wrapper">
+            <input
+              type="url"
+              placeholder="Enter your shortened URL"
+              value={qrUrl}
+              onChange={(e) => setQrUrl(e.target.value)}
+              required
+              disabled={qrLoading}
+              className="url-input"
+            />
+
+            {/* Pokédex Option Checkbox */}
+            <div className="pokedex-option">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={showPokedex}
+                  onChange={(e) => setShowPokedex(e.target.checked)}
+                />
+                <span>Add Pokédex Number (Gen 1-5)</span>
+              </label>
+
+              {/* Pokédex Number Input */}
+              {showPokedex && (
+                <div className="pokedex-input-wrapper">
+                  <label htmlFor="pokedex-number">
+                    Pokédex Number (001-479):
+                  </label>
+                  <input
+                    id="pokedex-number"
+                    type="number"
+                    min="1"
+                    max="479"
+                    value={parseInt(pokedexNumber)}
+                    onChange={handlePokedexChange}
+                    className="pokedex-input"
+                    placeholder="001"
+                  />
+                </div>
+              )}
+            </div>
+
+            <button type="submit" disabled={qrLoading} className="submit-btn">
+              {qrLoading ? (
+                <>
+                  <span className="spinner"></span>
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <svg
+                    className="btn-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
+                    />
+                  </svg>
+                  Generate QR Code
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+
+        {/* QR Error Display */}
+        {qrError && (
+          <div className="error notification">
+            <svg
+              className="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <p>{qrError}</p>
+          </div>
+        )}
+
+        {/* QR Code Display */}
+        {qrCode && (
+          <div className="result notification">
+            <div className="result-header">
+              <svg
+                className="success-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <h2>QR Code Generated!</h2>
+            </div>
+            <div className="qr-code-display">
+              <img src={qrCode} alt="QR Code" />
+              {showPokedex && (
+                <p className="pokedex-info">
+                  Pokédex #{pokedexNumber} included
+                </p>
+              )}
+            </div>
+            <button
+              className="copy-btn"
+              onClick={() => {
+                const link = document.createElement("a");
+                link.href = qrCode;
+                link.download = `qr-code-${pokedexNumber || "url"}.png`;
+                link.click();
+              }}
+            >
+              <svg
+                className="btn-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Download QR Code
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
