@@ -72,7 +72,7 @@ function App() {
       // Check for production domain
       if (
         hostname === "smallurl.co.uk" ||
-        hostname.endsWith(".smallurl.co.uk")
+        hostname.startsWith("smallurl.co.uk")
       ) {
         return true;
       }
