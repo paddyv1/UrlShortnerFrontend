@@ -273,6 +273,12 @@ function App() {
           </button>
         </div>
       )}
+
+      <div className="qr-code-generator">
+        <h2>QR Code Generator</h2>
+        <p>Generate a QR code for your shortened URL</p>
+        {/* Placeholder for future QR code generation feature */}
+      </div>
     </div>
   );
 }
