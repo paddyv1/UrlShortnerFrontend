@@ -45,3 +45,15 @@ export class ShortenUrlResponse {
     this.ErrorMessage = data.errorMessage;
   }
 }
+
+/**
+ * Request DTO for QR Code Generation
+ * Maps to C# QrCodeRequest model
+ */
+export class QrCodeRequest {
+  constructor(shortenedUrl, pokemonSprite = false, pokedexNumber = null) {
+    this.PokemonSprite = pokemonSprite;
+    this.ShortenedUrl = shortenedUrl;
+    this.PkdexNumber = pokedexNumber;
+  }
+}

@@ -1,9 +1,13 @@
 // Core React imports
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // Component styles
 import "./App.css";
 // Data Transfer Objects for API communication
-import { ShortenUrlRequest, ShortenUrlResponse } from "./types/dtos";
+import {
+  ShortenUrlRequest,
+  ShortenUrlResponse,
+  QrCodeRequest,
+} from "./types/dtos";
 
 /**
  * Main App Component - URL Shortener Application
@@ -29,6 +33,14 @@ function App() {
   const [qrError, setQrError] = useState(""); // Error message for QR generation
   const [showPokedex, setShowPokedex] = useState(false); // Toggle for Pokédex option
   const [pokedexNumber, setPokedexNumber] = useState("001"); // Selected Pokédex number
+
+  useEffect(() => {
+    return () => {
+      if (qrCode && qrCode.startsWith("blob:")) {
+        URL.revokeObjectURL(qrCode);
+      }
+    };
+  }, [qrCode]);
 
   const handleChange = (event) => {
     setSelectedTime(event.target.value);
@@ -113,20 +125,54 @@ function App() {
     setQrCode("");
 
     try {
-      // Build the QR code generation URL
-      let qrGenerationUrl = qrUrl;
+      // Build query parameters for GET request or use POST with body
+      // Option 1: Using POST with JSON body
+      const requestDto = new QrCodeRequest(
+        qrUrl, // ShortenedUrl
+        showPokedex, // PokemonSprite
+        showPokedex ? pokedexNumber : null, // PkdexNumber (nullable)
+      );
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/QRCode`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestDto),
+      });
 
-      // Add Pokédex number if enabled
-      if (showPokedex && pokedexNumber) {
-        qrGenerationUrl += `?pokedex=${pokedexNumber}`;
+      if (!response.ok) {
+        // Try to parse error message if backend sends JSON error
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message ||
+              errorData.error ||
+              "Failed to generate QR code",
+          );
+        }
+        throw new Error(`Failed to generate QR code: ${response.statusText}`);
       }
 
-      // Use a QR code API (example using QR Server API)
-      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrGenerationUrl)}`;
+      // Get the image as a blob (binary data)
+      const blob = await response.blob();
 
-      setQrCode(qrApiUrl);
+      // Create a local URL for the blob to display in <img> tag
+      const imageUrl = URL.createObjectURL(blob);
+      setQrCode(imageUrl);
+
+      // Optional: Get filename from Content-Disposition header if backend provides it
+      const contentDisposition = response.headers.get("Content-Disposition");
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
+        if (filenameMatch) {
+          // Store filename for download if needed
+          console.log("QR Code filename:", filenameMatch[1]);
+        }
+      }
     } catch (err) {
       setQrError(err.message || "Failed to generate QR code");
+      console.error("QR Code generation error:", err);
     } finally {
       setQrLoading(false);
     }
@@ -455,11 +501,25 @@ function App() {
             </div>
             <button
               className="copy-btn"
-              onClick={() => {
-                const link = document.createElement("a");
-                link.href = qrCode;
-                link.download = `qr-code-${pokedexNumber || "url"}.png`;
-                link.click();
+              onClick={async () => {
+                try {
+                  // Fetch the blob again for download
+                  const response = await fetch(qrCode);
+                  const blob = await response.blob();
+
+                  // Create download link
+                  const link = document.createElement("a");
+                  link.href = URL.createObjectURL(blob);
+                  link.download = `qr-code${showPokedex ? `-pokemon-${pokedexNumber}` : ""}.png`;
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+
+                  // Clean up the URL object
+                  URL.revokeObjectURL(link.href);
+                } catch (error) {
+                  console.error("Download failed:", error);
+                }
               }}
             >
               <svg
