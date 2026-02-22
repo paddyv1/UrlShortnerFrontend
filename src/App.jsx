@@ -427,7 +427,7 @@ function App() {
         <form onSubmit={handleQrSubmit} className="qr-form">
           <div className="input-wrapper">
             <input
-              type="url"
+              type="text"
               placeholder="Enter your shortened URL"
               value={qrUrl}
               onChange={(e) => setQrUrl(e.target.value)}
