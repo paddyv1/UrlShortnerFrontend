@@ -59,6 +59,43 @@ function App() {
   };
 
   /**
+   * Validate if the URL is from the correct short URL domain
+   * @param {string} url - URL to validate
+   * @returns {boolean} - True if valid, false otherwise
+   */
+  const isValidShortUrl = (url) => {
+    try {
+      const urlObj = new URL(url);
+      const hostname = urlObj.hostname;
+      //const hostWithPort = urlObj.host; // includes port
+
+      // Check for production domain
+      if (
+        hostname === "smallurl.co.uk" ||
+        hostname.endsWith(".smallurl.co.uk")
+      ) {
+        return true;
+      }
+
+      // Check for development (localhost with port 5152)
+      if (hostname === "localhost" && urlObj.port === "5152") {
+        return true;
+      }
+
+      // Also check for 127.0.0.1
+      if (hostname === "127.0.0.1" && urlObj.port === "5152") {
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      // Invalid URL format
+      console.error("URL validation error:", error);
+      return false;
+    }
+  };
+
+  /**
    * Handle form submission to shorten URL
    *
    * @param {Event} e - Form submission event
@@ -125,6 +162,12 @@ function App() {
     setQrCode("");
 
     try {
+      if (!isValidShortUrl(qrUrl)) {
+        throw new Error(
+          "Invalid URL. Please use a shortened URL from smallurl.co.uk",
+        );
+      }
+
       // Build query parameters for GET request or use POST with body
       // Option 1: Using POST with JSON body
       const requestDto = new QrCodeRequest(
