@@ -67,6 +67,8 @@ function App() {
     try {
       const urlObj = new URL(url);
       const hostname = urlObj.hostname;
+      console.log(hostname);
+      console.log(urlObj);
       //const hostWithPort = urlObj.host; // includes port
 
       // Check for production domain
