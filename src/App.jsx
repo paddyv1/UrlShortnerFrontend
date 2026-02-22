@@ -67,53 +67,9 @@ function App() {
     console.log("Validating URL:", url);
 
     try {
-      // Ensure URL has a protocol
-      let urlToValidate = url;
-      // if (!url.startsWith("http://") && !url.startsWith("https://")) {
-      //   urlToValidate = "https://" + url;
-      //   console.log("Added protocol:", urlToValidate);
-      // }
-
-      const urlObj = new URL(urlToValidate);
-      const hostname = urlObj.hostname;
-      const port = urlObj.port;
-      const hostWithPort = urlObj.host; // includes port
-
-      console.log(
-        "Parsed URL - hostname:",
-        hostname,
-        "port:",
-        port,
-        "host:",
-        hostWithPort,
-      );
-
-      // Check for production domain
-      if (
-        hostname === "smallurl.co.uk" ||
-        hostname.endsWith(".smallurl.co.uk")
-      ) {
-        console.log("✓ Valid production URL");
-        return true;
-      }
-
-      // Check for development (localhost with port 5152)
-      if (hostname === "localhost" && (port === "5152" || port === "")) {
-        console.log("✓ Valid localhost URL");
-        return true;
-      }
-
-      // Also check for 127.0.0.1
-      if (hostname === "127.0.0.1" && (port === "5152" || port === "")) {
-        console.log("✓ Valid 127.0.0.1 URL");
-        return true;
-      }
-
-      console.log("✗ URL validation failed");
-      return false;
+      return url.trim().startsWith("smallurl.co.uk");
     } catch (error) {
-      // Invalid URL format
-      console.error("URL parsing error:", error);
+      console.error("URL validation error:", error);
       return false;
     }
   };
